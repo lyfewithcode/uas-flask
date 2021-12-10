@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blog Management
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center post">Blog Manager</h2>
+    <button class="btn btn-success float-right add" data-target="#tambahModal" data-toggle="modal"
+            type="button"><i class="far fa-plus-square ic-add"></i>Tambah
+    </button>
+
+    <!--Modal Tambah-->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="tambahModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="exampleModalLabel">Postingan baru</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/blog/tambah" method="post">
+                        <div class="form-group">
+                            <label class="col-form-label text-dark" for="recipient-name">Judul:</label>
+                            <input class="form-control" id="recipient-name" name="judul_post" required type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark" for="message-text">Isi:</label>
+                            <textarea class="form-control" id="message-text" name="isi_post" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label text-dark" for="message-text">Keyword:</label>
+                            <input class="form-control" id="keyword-text" name="keyword_post" required type="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Batal</button>
+                            <input class="btn btn-primary" type="submit" value="Posting">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if artikel|length < 1 %}
+    <h5 class="text-center post">Belum ada postingan</h5>
+    {% else %}
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <!-- Your Columns HERE -->
+            <th hidden scope="col">ID</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Isi</th>
+            <th scope="col">Keyword</th>
+            <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Your rows inside the table HERE: -->
+        {% for blog in artikel %}
+        <tr>
+            <td hidden>{{ blog[0] }}</td>
+            <td>{{ blog[1] }}</td>
+            <td>{{ blog[2] }}</td>
+            <td>{{ blog[3] }}</td>
+            <td>
+                <button class="btn btn-outline btn-info" data-target="#ubahModal-{{ blog[0] }}"
+                        data-toggle="modal"><i class="far fa-edit"></i></button>
+                <button class="btn btn-outline btn-danger" data-target="#hapusModal-{{ blog[0] }}"
+                        data-toggle="modal"><i class="far fa-trash-alt"></i></button>
+
+                <!-- Modal Hapus-->
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="hapusModal-{{ blog[0] }}"
+                     role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-dark" id="exampleModalLabel">Hapus postingan</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-dark">Anda yakin ingin menghapus postingan ini?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal" type="button">Tutup</button>
+                                <a href="/blog/hapus/{{ blog[0] }}">
+                                    <button class="btn btn-danger"
+                                            type="button">Yakin
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Modal Ubah-->
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade text-dark" id="ubahModal-{{ blog[0] }}"
+                     role="dialog" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ubah postingan</h5>
+                                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="form-group" hidden>
+                                        <label class="col-form-label" for="recipient-name">ID:</label>
+                                        <input class="form-control" id="recipient-name" name="temp_id" type="text"
+                                               value="{{ blog[0] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="recipient-name">Judul:</label>
+                                        <input class="form-control" id="recipient-name" name="judul" type="text"
+                                               value="{{ blog[1] }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="message-text">Isi:</label>
+                                        <textarea class="form-control" id="message-text"
+                                                  name="isi">{{ blog[2] }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="message-text">Keyword:</label>
+                                        <input class="form-control" id="keyword-text" name="keyword" type="text"
+                                               value="{{ blog[3] }}">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input class="btn btn-success" type="submit" value="Simpan">
+                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                type="button">Tutup
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

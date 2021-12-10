@@ -1,0 +1,41 @@
+body {
+  background-color: #212121;
+  color: white;
+}
+
+.post {
+  margin-top: 3em;
+}
+
+.alert {
+  position: absolute;
+  margin-left: 1em;
+}
+
+.alert .close {
+  margin-left: 1em;
+}
+
+.ic-add {
+  padding-right: 0.3em;
+}
+
+.card {
+  margin-top: 2em;
+}
+
+.add {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.table {
+  margin-top: 2em;
+}
+
+.login-div {
+  padding: 2em;
+  width: 50%;
+  margin-top: 1em;
+}
+/*# sourceMappingURL=main.css.map */
