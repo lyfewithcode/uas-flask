@@ -1,6 +1,6 @@
 body {
-  background-color: #212121;
-  color: white;
+  background-color: #B1B1B1;
+  color: black;
 }
 
 .post {
@@ -37,5 +37,10 @@ body {
   padding: 2em;
   width: 50%;
   margin-top: 1em;
+}
+
+.bd-navbar {
+  min-height: 4rem;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 5%), inset 0 -1px 0 rgb(0 0 0 / 10%);
 }
 /*# sourceMappingURL=main.css.map */
